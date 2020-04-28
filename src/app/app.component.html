@@ -1,0 +1,30 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+      <input type="text" name="filtername" [(ngModel)] = "filterString" >
+      <br><br>
+      <!-- async pipe helps display, async data -->
+      <h4>App status: {{ appStatus | async }}</h4> 
+      <hr>
+      <ul class="list-group">
+        <li
+          class="list-group-item"
+          *ngFor="let server of servers | filter:filterString:'status' | sort"
+          [ngClass]="getStatusClasses(server)">
+        
+          <strong>{{ server.name | shorten:10 }}</strong> 
+              | {{ server.instanceType  | uppercase |  reverse }} 
+              | {{ server.started | date:'fullDate' | uppercase}}  
+
+                <!-- observe the order of the pipe, e.g, date comes before uppercase -->
+          <span
+          class="badge">
+          {{ server.status }}
+        </span>
+        </li>
+      </ul>
+      <hr>
+      <button class="btn btn-sm btn-success" (click)="onAddServer()">Add Server</button>
+    </div>
+  </div>
+</div>
